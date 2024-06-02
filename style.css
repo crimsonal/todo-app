@@ -82,3 +82,28 @@ body {
     background-color: rgb(140, 0, 215);
 }
 
+.open-notes-btn {
+    height: 125px;
+    width: 125px;
+    border-radius: 15px;
+    position: absolute;
+    justify-content: center;
+    display: inline-flex;
+    flex-direction: row;
+    cursor: pointer;
+    background-color: rgba(113, 113, 113, 0.193);
+    top: 25%;
+}
+
+.open-notes-btn:hover {
+    scale: 125%;
+}
+
+.open-notes-btn-icon {
+    background: url(new.svg);
+    background-size: contain;
+    top: 50%;
+    height: 80%;
+    width: 80%;
+}
+
