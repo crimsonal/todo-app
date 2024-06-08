@@ -3,18 +3,37 @@
     <meta charset="UTF-8">
     <title>todo-app</title>
     <link rel="stylesheet" href="style.css">
-
+    <div class="note-editor">
+                
+    </div>
     <div class="absolute">
         <div class="absolute inset-0 justify-center">
             <div class="bg-shape1 bg-teal opacity-50 bg-blur"></div>
             <div class="bg-shape2 bg-primary opacity-50 bg-blur"></div>
             <div class="bg-shape3 bg-purple opacity-50 bg-blur"></div>
+            <div class="bg-shape4 bg-orange opacity-50 bg-blur"></div>
             <div class="open-notes-btn"> 
                 <div class="open-notes-btn-icon center"></div>
             </div>
+            
             <div class="notes-frame">
-                <div class="close-notes-btn">
-                    <div class="close-notes-btn-icon center"></div>
+                <div class="toolbar"> 
+                    <div class="new-note-btn toolbar-button">
+                        <div class="new-note-btn-icon toolbar-icon center"></div>
+                    </div>
+                    <div class="edit-note-btn toolbar-button">
+                        <div class="edit-note-btn-icon toolbar-icon center"></div>
+                    </div>
+                    <div class="delete-note-btn toolbar-button">
+                        <div class="delete-note-btn-icon toolbar-icon center"></div>
+                    </div>
+                    <div class="close-notes-btn toolbar-button">
+                        <div class="close-notes-btn-icon center toolbar-icon"></div>
+                    </div>
+                </div>
+                
+                <div class="notes-container">
+                    <div class="notes-container-message">No notes to display</div>
                 </div>
             </div>
         </div>
