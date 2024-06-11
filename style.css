@@ -80,9 +80,6 @@ body {
     100%{left: 0px; top: 0px;}
 }
 
-
-
-
 .opacity-50 {
     opacity: .5;
 }
@@ -122,6 +119,19 @@ body {
     top: 5%;
     margin-left: 10px;
 }
+
+.toolbar-button-disabled {
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
+    background-color: rgba(100, 99, 99, 0.456);
+    cursor: default;
+    justify-content: center;
+    display: flex;
+    position: relative;
+    top: 5%;
+    margin-left: 10px;
+}
 .open-notes-btn {
     height: 125px;
     width: 125px;
@@ -141,10 +151,14 @@ body {
     
 }
 
-
 .toolbar-button:hover {
     background-color: rgba(42, 42, 42, 0.193);
 }
+
+.note:hover {
+    background-color: rgba(118, 118, 118, 0.193);
+}
+
 
 .open-notes-btn:hover {
     scale: 125%;
@@ -185,6 +199,16 @@ body {
     background-size: contain;
 }
 
+.discard-note-btn-icon {
+    background: url(x.svg);
+    background-size: contain;
+}
+
+.save-note-btn-icon {
+    background: url(check.svg);
+    background-size: contain;
+}
+
 .center {
     position: relative;
     top: 50%;
@@ -212,6 +236,10 @@ body {
     left: 5%;
     top: 5%;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    padding-bottom: 15px;
     
 
 }
@@ -242,8 +270,69 @@ body {
     margin: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(31, 31, 31, 0.382);
+    background-color: rgba(31, 31, 31, 0.2);
     position: absolute;
     top: 0;
     left: 0;
+    justify-content: center;
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.notes-editor-frame {
+    height: 700px;
+    width: 700px;
+    position: absolute;
+    border-radius: 15px;
+    background-color: rgba(113, 113, 113, 0.193);
+    justify-content: center;
+    border-color: white;
+    visibility: none;
+    display: inline-flex;
+    flex-direction: row;
+    transform: translateY(-60%);
+    top: 50%;
+
+}
+
+#notepad {
+    /* display: block; */
+    height: 90%;
+    width: 90%;
+    background-color: rgba(206, 206, 206, 0.727);
+    border-radius: 5px;
+    margin-top: 5%;
+    z-index: 2;
+    font-size: 25px;
+    vertical-align: text-top;
+    resize: none;
+}
+
+.editor-btn {
+    height: 150px;
+    width: 150px;
+    border-radius: 100px;
+    background-color: rgba(58, 3, 3, 0.193);
+    cursor: pointer;
+    justify-content: center;
+    display: flex;
+    
+    position: relative;
+    top: 82%;
+    margin-left: 40px;
+}
+
+.note{ 
+    width: 90%;
+    height: 40px;
+    border-radius: 15px; 
+    margin-left: 5%;
+    background-color: rgba(35, 31, 31, 0.193);
+    vertical-align: middle;
+    border: solid;
+    border-color: rgba(129, 110, 110, 0.498);
+    text-align: center;
+    margin-top: 3px;
+    font-size: 30px;
+    cursor: pointer;
 }
