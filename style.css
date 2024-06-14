@@ -316,7 +316,6 @@ body {
     cursor: pointer;
     justify-content: center;
     display: flex;
-    
     position: relative;
     top: 82%;
     margin-left: 40px;
@@ -335,4 +334,8 @@ body {
     margin-top: 3px;
     font-size: 30px;
     cursor: pointer;
+}
+
+.selected-note-border {
+    border-color: rgba(255, 255, 255, 0.601);
 }

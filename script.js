@@ -14,12 +14,32 @@ let notesContainer = document.getElementsByClassName("notes-container")[0]
 
 
 let numNotes = 0
+let index = 0
 let selectedNote = null
+let editing = false
+let previewCharacterCount = 9
 const notes = [];
 
 function checkNotes() {
     if (numNotes == 0) {
 
+    }
+}
+
+function toolbarToggle(editBtn, deleteBtn) {
+    if (editBtn) {
+        editNoteBtn.classList.add("toolbar-button")
+        editNoteBtn.classList.remove("toolbar-button-disabled")
+    } else {
+        editNoteBtn.classList.add("toolbar-button-disabled")
+        editNoteBtn.classList.remove("toolbar-button")
+    }
+    if (deleteBtn) {
+        deleteNoteBtn.classList.add("toolbar-button")
+        deleteNoteBtn.classList.remove("toolbar-button-disabled")
+    } else {
+        deleteNoteBtn.classList.add("toolbar-button-disabled")
+        deleteNoteBtn.classList.remove("toolbar-button")
     }
 }
 function load() {
@@ -46,30 +66,69 @@ function notesBtnClick() {
 function newNote() {
     noteEditor.style.visibility = "visible"
     notesFrame.style.visibility = "hidden"
+    notepad.value = ""
 }
 
 function closePrompt() {
     noteEditor.style.visibility = "hidden"
     notesFrame.style.visibility = "visible" 
+    editing = false
+    deselectNote()
 }
 
-function selectNote() {
-    
+function deselectNote() {
+    if (selectedNote == null) {
+        return
+    }
+    selectedNote.classList.remove("selected-note-border")
+    selectedNote = null 
+    toolbarToggle(false, false)
+}
+
+
+function selectNote(e) {
+    let target = e.target 
+    if (target == selectedNote) {
+        // deselect note
+        deselectNote()
+        
+    } else {
+        
+        if (selectedNote != null) {
+            selectedNote.classList.remove("selected-note-border")
+        }
+        selectedNote = target
+        target.classList.add("selected-note-border")
+        toolbarToggle(true, true)
+       
+        
+    }
 }
 function addNote() {
     if (notepad.value.trim().length == 0) { // check for whitespace
         return
     }
-       
-    var newNote = document.createElement("div")
-    newNote.id = "note" + numNotes 
-    newNote.className = "note"
-    newNote.innerHTML = notepad.value.substring(0, 9) + ".."
-    notesContainer.appendChild(newNote)
-    notesContainerMessage.style.display = "none"
-    numNotes++
+    
+    if (editing) {
+        selectedNote.innerHTML = notepad.value.substring(0, previewCharacterCount) + ".."
+        notes[index] = notepad.value
+        editing = false
+        deselectNote()
+    } else {
+        var newNote = document.createElement("div")
+        newNote.id = "note" + numNotes 
+        newNote.className = "note"
+        newNote.innerHTML = notepad.value.substring(0, previewCharacterCount) + ".."
+        notesContainer.appendChild(newNote)
+        notesContainerMessage.style.display = "none"
+        numNotes++
+        newNote.addEventListener("click", selectNote)
+        notes.push(notepad.value)
+        
+    }
     closePrompt()
-    newNote.addEventListener("click", selectNote)
+    notepad.value = ""
+
 }
 
 
@@ -79,6 +138,32 @@ function cancelNote(e) {
     }
 }
 
+function editNote() {
+    if (selectedNote == null) {
+        return                                                                                        
+    }
+    editing = true
+    index = Number(selectedNote.id.substring(4))
+    newNote()
+    notepad.value = notes[index]
+}
+
+function isClickable(obj) {
+    if (obj.classList.contains("button") || obj.classList.contains("note") || obj.classList.contains("toolbar-icon")) {
+        return true
+    }
+    return false
+}
+
+function windowClick(e) {
+    // handles deselection of a note when user clicks on a non-button
+    let target = e.target
+    if (!isClickable(target)) { // not a clickable element
+        if (!editing) {
+            deselectNote()
+        }
+    }
+}
 window.addEventListener("load", load)
 openNotesBtn.addEventListener("click", notesBtnClick)
 closeNotesBtn.addEventListener("click", notesBtnClick)
@@ -86,3 +171,5 @@ newNoteBtn.addEventListener("click", newNote)
 noteEditor.addEventListener("click", cancelNote)
 discardNoteBtn.addEventListener("click", cancelNote)
 saveNoteBtn.addEventListener("click", addNote)
+editNoteBtn.addEventListener("click", editNote)
+window.addEventListener("click", windowClick)
