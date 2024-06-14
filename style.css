@@ -209,6 +209,11 @@ body {
     background-size: contain;
 }
 
+.view-note-btn-icon {
+    background: url(eye.svg);
+    background-size: contain;
+}
+
 .center {
     position: relative;
     top: 50%;

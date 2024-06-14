@@ -5,6 +5,7 @@ let notesContainerMessage = document.getElementsByClassName("notes-container-mes
 let newNoteBtn = document.getElementsByClassName("new-note-btn")[0]
 let editNoteBtn = document.getElementsByClassName("edit-note-btn")[0]
 let deleteNoteBtn = document.getElementsByClassName("delete-note-btn")[0]
+let viewNoteBtn = document.getElementsByClassName("view-note-btn")[0]
 let discardNoteBtn = document.getElementsByClassName("discard-note-btn")[0]
 let saveNoteBtn = document.getElementsByClassName("save-note-btn")[0]
 let discardNoteBtnIcon = document.getElementsByClassName("discard-note-btn-icon")[0]
@@ -45,10 +46,15 @@ function toolbarToggle(editBtn, deleteBtn) {
 function load() {
     notesFrame.style.visibility = "hidden"
     noteEditor.style.visibility = "hidden"
+
     editNoteBtn.classList.add("toolbar-button-disabled")
     editNoteBtn.classList.remove("toolbar-button")
+
     deleteNoteBtn.classList.add("toolbar-button-disabled")
     deleteNoteBtn.classList.remove("toolbar-button")
+
+    viewNoteBtn.classList.add("toolbar-button-disabled")
+    viewNoteBtn.classList.remove("toolbar-button")
     
     checkNotes()
 }
