@@ -85,6 +85,7 @@ function closePrompt() {
 
 function deselectNote() {
     if (selectedNote == null) {
+        console.log("selected note is null")
         return
     }
     selectedNote.classList.remove("selected-note-border")
@@ -145,9 +146,7 @@ function cancelNote(e) {
     }
 }
 
-function getIndex() {
-    return Number(selectedNote.id.substring(4))
-}
+
 
 
 function editNote() {
@@ -176,9 +175,22 @@ function windowClick(e) {
     }
 }
 
+function getIndex() {
+    return Number(selectedNote.id.substring(4))
+}
+
 function deleteNote() {
     if (selectedNote != null) {
-
+        let index = getIndex() 
+        let notes2 = document.getElementsByClassName("note")
+        for (let i = index+1; i < notes2.length; i++) { // decrement notes that are ahead
+            notes2[i].id = "note" + (i - 1)
+        }
+        notesContainer.removeChild(notes2[index])
+        notes.splice(index, 1)
+        deselectNote()
+        
+        
     }
 }
 
