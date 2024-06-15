@@ -9,6 +9,7 @@ let viewNoteBtn = document.getElementsByClassName("view-note-btn")[0]
 let discardNoteBtn = document.getElementsByClassName("discard-note-btn")[0]
 let saveNoteBtn = document.getElementsByClassName("save-note-btn")[0]
 let discardNoteBtnIcon = document.getElementsByClassName("discard-note-btn-icon")[0]
+let deleteNoteBtnIcon = document.getElementsByClassName("delete-note-btn-icon")[0]
 let noteEditor = document.getElementsByClassName("note-editor")[0]
 let notepad = document.getElementById("notepad")
 let notesContainer = document.getElementsByClassName("notes-container")[0]
@@ -144,14 +145,18 @@ function cancelNote(e) {
     }
 }
 
+function getIndex() {
+    return Number(selectedNote.id.substring(4))
+}
+
+
 function editNote() {
     if (selectedNote == null) {
         return                                                                                        
     }
     editing = true
-    index = Number(selectedNote.id.substring(4))
     newNote()
-    notepad.value = notes[index]
+    notepad.value = notes[getIndex()]
 }
 
 function isClickable(obj) {
@@ -170,6 +175,15 @@ function windowClick(e) {
         }
     }
 }
+
+function deleteNote() {
+    if (selectedNote != null) {
+
+    }
+}
+
+// events
+
 window.addEventListener("load", load)
 openNotesBtn.addEventListener("click", notesBtnClick)
 closeNotesBtn.addEventListener("click", notesBtnClick)
@@ -179,3 +193,6 @@ discardNoteBtn.addEventListener("click", cancelNote)
 saveNoteBtn.addEventListener("click", addNote)
 editNoteBtn.addEventListener("click", editNote)
 window.addEventListener("click", windowClick)
+deleteNoteBtn.addEventListener("click", deleteNote)
+deleteNoteBtnIcon.addEventListener("click", deleteNote)
+
