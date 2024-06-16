@@ -85,7 +85,6 @@ function closePrompt() {
 
 function deselectNote() {
     if (selectedNote == null) {
-        console.log("selected note is null")
         return
     }
     selectedNote.classList.remove("selected-note-border")
@@ -189,7 +188,7 @@ function deleteNote() {
         notesContainer.removeChild(notes2[index])
         notes.splice(index, 1)
         deselectNote()
-        
+        numNotes--;
         
     }
 }
