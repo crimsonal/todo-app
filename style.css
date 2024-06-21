@@ -143,6 +143,13 @@ body {
     cursor: pointer;
     background-color: rgba(113, 113, 113, 0.193);
     top: 25%;
+    transition: 0.1s;
+}
+
+
+editor-btn:hover {
+    scale: 115%;
+    transition: .15s;
 }
 
 .close-notes-btn {
@@ -229,7 +236,6 @@ body {
     justify-content: center;
     border-color: white;
     visibility: visible;
-
 }
 
 .notes-container {
@@ -324,6 +330,7 @@ body {
     position: relative;
     top: 82%;
     margin-left: 40px;
+    
 }
 
 .note{ 

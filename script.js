@@ -15,20 +15,22 @@ let notepad = document.getElementById("notepad")
 let notesContainer = document.getElementsByClassName("notes-container")[0]
 
 
-let numNotes = 0
-let index = 0
+let numNotes = null
+let index = localStorage.getItem("index") 
 let selectedNote = null
 let editing = false
 let previewCharacterCount = 9
 const notes = [];
 
-function checkNotes() {
-    if (numNotes == 0) {
-
+function getNumNotes() {
+    let num = localStorage.getItem("numNotes")
+    if (num == null || num == 0) {
+        return 0
     }
+    return num
 }
 
-function toolbarToggle(editBtn, deleteBtn) {
+function toolbarToggle(editBtn, deleteBtn, viewBtn) {
     if (editBtn) {
         editNoteBtn.classList.add("toolbar-button")
         editNoteBtn.classList.remove("toolbar-button-disabled")
@@ -36,6 +38,7 @@ function toolbarToggle(editBtn, deleteBtn) {
         editNoteBtn.classList.add("toolbar-button-disabled")
         editNoteBtn.classList.remove("toolbar-button")
     }
+
     if (deleteBtn) {
         deleteNoteBtn.classList.add("toolbar-button")
         deleteNoteBtn.classList.remove("toolbar-button-disabled")
@@ -43,22 +46,18 @@ function toolbarToggle(editBtn, deleteBtn) {
         deleteNoteBtn.classList.add("toolbar-button-disabled")
         deleteNoteBtn.classList.remove("toolbar-button")
     }
+
+    if (viewBtn) {
+        viewNoteBtn.classList.add("toolbar-button")
+        viewNoteBtn.classList.remove("toolbar-button-disabled")
+    } else {
+        viewNoteBtn.classList.add("toolbar-button-disabled")
+        viewNoteBtn.classList.remove("toolbar-button")
+    }
 }
-function load() {
-    notesFrame.style.visibility = "hidden"
-    noteEditor.style.visibility = "hidden"
 
-    editNoteBtn.classList.add("toolbar-button-disabled")
-    editNoteBtn.classList.remove("toolbar-button")
 
-    deleteNoteBtn.classList.add("toolbar-button-disabled")
-    deleteNoteBtn.classList.remove("toolbar-button")
 
-    viewNoteBtn.classList.add("toolbar-button-disabled")
-    viewNoteBtn.classList.remove("toolbar-button")
-    
-    checkNotes()
-}
 
 function notesBtnClick() {
     if (notesFrame.style.visibility == "hidden") {
@@ -89,7 +88,7 @@ function deselectNote() {
     }
     selectedNote.classList.remove("selected-note-border")
     selectedNote = null 
-    toolbarToggle(false, false)
+    toolbarToggle(false, false, false)
 }
 
 
@@ -106,11 +105,14 @@ function selectNote(e) {
         }
         selectedNote = target
         target.classList.add("selected-note-border")
-        toolbarToggle(true, true)
+        toolbarToggle(true, true, true)
        
         
     }
 }
+
+
+
 function addNote() {
     if (notepad.value.trim().length == 0) { // check for whitespace
         return
@@ -118,7 +120,8 @@ function addNote() {
     
     if (editing) {
         selectedNote.innerHTML = notepad.value.substring(0, previewCharacterCount) + ".."
-        notes[index] = notepad.value
+        // notes[index] = notepad.value
+        localStorage.setItem(String(getIndex()), notepad.value)
         editing = false
         deselectNote()
     } else {
@@ -128,11 +131,14 @@ function addNote() {
         newNote.innerHTML = notepad.value.substring(0, previewCharacterCount) + ".."
         notesContainer.appendChild(newNote)
         notesContainerMessage.style.display = "none"
+        localStorage.setItem(String(numNotes), notepad.value)
         numNotes++
         newNote.addEventListener("click", selectNote)
-        notes.push(notepad.value)
+        // notes.push(notepad.value)
+
         
     }
+    localStorage.setItem("numNotes", numNotes)
     closePrompt()
     notepad.value = ""
 
@@ -154,7 +160,8 @@ function editNote() {
     }
     editing = true
     newNote()
-    notepad.value = notes[getIndex()]
+    notepad.value = localStorage.getItem(String(getIndex()))
+    // notepad.value = notes[getIndex()]
 }
 
 function isClickable(obj) {
@@ -181,17 +188,53 @@ function getIndex() {
 function deleteNote() {
     if (selectedNote != null) {
         let index = getIndex() 
+        console.log(index)
         let notes2 = document.getElementsByClassName("note")
         for (let i = index+1; i < notes2.length; i++) { // decrement notes that are ahead
             notes2[i].id = "note" + (i - 1)
         }
         notesContainer.removeChild(notes2[index])
-        notes.splice(index, 1)
+        // notes.splice(index, 1)
+        localStorage.removeItem(String(index))
         deselectNote()
         numNotes--;
+        localStorage.setItem("numNotes", numNotes)
         
     }
 }
+
+function getNotes() {
+    console.log(numNotes)
+    for (let i = 0; i < numNotes; i++) {
+        let text = localStorage.getItem(String(i))
+        var newNote = document.createElement("div")
+        newNote.id = "note" + i 
+        newNote.className = "note"
+        newNote.innerHTML = text.substring(0, previewCharacterCount) + ".."
+        notesContainer.appendChild(newNote)
+        notesContainerMessage.style.display = "none"
+        newNote.addEventListener("click", selectNote)
+    }
+}
+
+
+function load() {
+    notesFrame.style.visibility = "hidden"
+    noteEditor.style.visibility = "hidden"
+
+    editNoteBtn.classList.add("toolbar-button-disabled")
+    editNoteBtn.classList.remove("toolbar-button")
+
+    deleteNoteBtn.classList.add("toolbar-button-disabled")
+    deleteNoteBtn.classList.remove("toolbar-button")
+
+    viewNoteBtn.classList.add("toolbar-button-disabled")
+    viewNoteBtn.classList.remove("toolbar-button")
+    
+    numNotes = getNumNotes()
+    getNotes()
+}
+
 
 // events
 
