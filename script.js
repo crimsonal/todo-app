@@ -188,15 +188,21 @@ function getIndex() {
 function deleteNote() {
     if (selectedNote != null) {
         let index = getIndex() 
-        console.log(index)
+        
         let notes2 = document.getElementsByClassName("note")
+        localStorage.removeItem(String(index))
         for (let i = index+1; i < notes2.length; i++) { // decrement notes that are ahead
+            // TODO: decrement keys in storage
+            let prevContent = localStorage.getItem(i)
             notes2[i].id = "note" + (i - 1)
+            localStorage.removeItem(i)
+            localStorage.setItem(String(i-1), prevContent)
         }
         notesContainer.removeChild(notes2[index])
         // notes.splice(index, 1)
-        localStorage.removeItem(String(index))
+        
         deselectNote()
+        
         numNotes--;
         localStorage.setItem("numNotes", numNotes)
         
@@ -204,7 +210,6 @@ function deleteNote() {
 }
 
 function getNotes() {
-    console.log(numNotes)
     for (let i = 0; i < numNotes; i++) {
         let text = localStorage.getItem(String(i))
         var newNote = document.createElement("div")
